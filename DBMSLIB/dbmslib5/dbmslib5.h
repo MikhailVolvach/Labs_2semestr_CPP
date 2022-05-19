@@ -92,6 +92,7 @@ namespace dbmsLib5
 		virtual ~DBTable5() {};//виртуальный деструктор
 		virtual Header GetHeader() = 0;
 		virtual vector<int> IndexOfRecord(void* keyValue, string keyColumnName) = 0;
+		virtual vector<Row> GetData() = 0;
 		//по значению ключа определяет 
 		//порядковый номер (индекс) строки (записи) в data.
 		// keyValue-значение ключа (указатель на string, int или DBDate5)
@@ -146,6 +147,7 @@ namespace dbmsLib5
 		string GetTableName();
 		string GetPrimaryKey() { return primaryKey; }
 		Header GetHeader();
+		vector<Row> GetData();
 		void SetHeader(Header& hdr);
 		Row CreateRow() { return Row(); };
 		Row GetRow(int index);
@@ -209,7 +211,7 @@ namespace dbmsLib5
 		Row CreateRow();
 		void AddRow(int index);
 		DBTable5* SelfRows(string colName, Condition cond, void* value);
-
+		vector<Row> GetData();
 		void CreateTableMaket(Strip*& strips, int& nStrips, int screenWidth);
 	};
 	//==============Класс DBTableSet5============================
@@ -230,6 +232,7 @@ namespace dbmsLib5
 	public:
 		DBTableSet5() {};
 		DBTableSet5(string name);
+		map<string, DBTable5*> GetDB();
 		void ReadDB5();
 		void PrintDB5(int numcol);
 		void WriteDB5();

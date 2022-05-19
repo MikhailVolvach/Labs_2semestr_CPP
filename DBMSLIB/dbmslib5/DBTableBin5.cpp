@@ -234,6 +234,10 @@ namespace dbmsLib5 {
 	string DBTableBin5::GetPrimaryKey() { return this->primaryKey; }
 	string DBTableBin5::GetFileName()	{ return this->fileName; }
 	Row DBTableBin5::GetRow(int index)	{ return this->data[index]; }
+	vector<Row> DBTableBin5::GetData()
+	{
+		return this->data;
+	}
 
 	/* Setters */
 	void DBTableBin5::SetHeader(Header& hdr)		{ this->columnHeaders = hdr; }

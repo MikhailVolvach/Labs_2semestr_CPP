@@ -142,4 +142,9 @@ namespace dbmsLib5 {
 	{
 		return this->GetHeader()[columnName].colType;
 	}
+
+	vector<Row> DBTable5::GetData()
+	{
+		return this->data;
+	}
 }

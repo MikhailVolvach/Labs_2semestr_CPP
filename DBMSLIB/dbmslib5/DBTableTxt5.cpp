@@ -163,8 +163,39 @@ namespace dbmsLib5 {
 		}
 
 		pair<string, void*> parRow;
+		/*while (getline(FILE, line))
+		{
+			Row row = *(new Row);
+			const string delims = "|";
+			
+
+			for (string::iterator iter = line.begin(); iter != line.end(); ++iter)
+			{
+				if (delims.find(*iter) != string::npos)
+				{
+					*iter = '\n';
+				}
+			}
+
+			istringstream istr(line);
+			Header::iterator headerIter = this->columnHeaders.begin();
+			while (getline(istr, line) && headerIter != this->columnHeaders.end())
+			{
+				istringstream tmp(line);
+				string tmpWord;
+				tmp >> tmpWord;
+				string word = ignoreBlanc(tmpWord);
+				
+
+				parRow.first = headerIter->second.colName;
+				parRow.second = GetValue(word, headerIter->second.colName, this->columnHeaders);
+				++headerIter;
+			}
+
+		}*/
 		while (!FILE.eof())
 		{
+
 			Row row = *(new Row);
 			getline(FILE, line);
 			i = 0;
@@ -291,6 +322,15 @@ namespace dbmsLib5 {
 		}
 		return this->data[index]; 
 	}
+	vector<Row> DBTableTxt5::GetData()
+	{
+		if (!this->data.size())
+		{
+			exit(EMPRTY_CLASS_FIELD);
+		}
+		return this->data;
+	}
+
 	/*DBType dbmsLib5::DBTableTxt5::GetType(char* columnName)
 	{
 		return DBType();

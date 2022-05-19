@@ -12,7 +12,6 @@ namespace dbmsLib5 {
 		string DBTablesTxt = "DBTables.txt";
 
 		ifstream FILE("../" + folderName + "/" + DBTablesTxt);
-		//cout << "../" + folderName + "/" + DBTablesTxt << endl;
 		string fileStr;
 		getline(FILE, fileStr);
 
@@ -38,12 +37,6 @@ namespace dbmsLib5 {
 			NamesOfTables.push_back(word);
 		}
 
-		cout << "\tИмена таблиц БД:\n";
-		for (size_t i = 0; i < NamesOfTables.size(); ++i)
-		{
-			cout << i + 1 << " " << NamesOfTables[i] << endl;
-		}
-
 		this->initNewDB(NamesOfTables);
 	}
 
@@ -55,14 +48,6 @@ namespace dbmsLib5 {
 	}
 
 	string FileType(string dbName) {
-		//size_t type = 1;
-		/*cout << "Chose file type: " << endl << "1 - bin." << endl << "2 - txt" << endl;
-		cin >> type;
-		if (!(type == 1 || type == 2))
-		{
-			cout << "Wrong file type. Setted default file type (bin)" << endl;
-			type = 1;
-		}*/
 		return "." + dbName.substr(dbName.length() - 3);
 	}
 
@@ -72,8 +57,6 @@ namespace dbmsLib5 {
 			iter->second->WriteDBTable5(iter->first + FileType(this->dbName));
 		}
 	}
-
-	
 
 	int DBTableSet5::initNewDB(vector<string> tableNames) {
 		string folderName = this->dbName;
@@ -85,26 +68,34 @@ namespace dbmsLib5 {
 
 		for (size_t i = 0; i < tableNames.size(); i++) {
 
-			if (fileType == ".Txt")
+			if (fileType == ".txt")
 			{
 				this->db[tableNames[i]] = new DBTableTxt5(tableNames[i]);
 			}
 			else {
-				if (fileType == ".Bin")
+				if (fileType == ".bin")
 				{
 					this->db[tableNames[i]] = new DBTableBin5(tableNames[i]);
 				}
 				else {
-					cout << "ReadDB1:Ошибка имени БД" << endl;
+					cout << "ReadDB1:Ошибка имени БД " << tableNames[i] << endl;
 					return -1;
 				}
 			}
 
 			//полиморфный вызов виртуальной функции
-			cout << "../" + folderName + "/" + tableNames[i] + fileType << endl;
 			this->db[tableNames[i]]->ReadDBTable5("../" + folderName + "/" + tableNames[i] + fileType);
 		}
 		return 0;
+	}
+
+	map<string, DBTable5*> DBTableSet5::GetDB()
+	{
+		if (!this->db.size())
+		{
+			exit(EMPRTY_CLASS_FIELD);
+		}
+		return this->db;
 	}
 }
 
